@@ -20,11 +20,10 @@
 
 int main(int argc, char **argv) 
 {
-	
 	int c;
 	
 	//parameters to be set with predefined values
-	int iterations = 100 * 1000;
+	int iterations = 10000 * 1000;
 	int advChannels = 16;
 	int listChannels = 16;
 	int method = 1;
@@ -70,6 +69,8 @@ int main(int argc, char **argv)
 				break;
 		}
 	}
+	
+	//cout<<iterations<<endl;
 	
 	if(listChannels > advChannels)
 		listChannels = advChannels;
@@ -121,11 +122,12 @@ int main(int argc, char **argv)
 		}
 		
 	}
-	
-	advNodes.push_back(tmp);
+	for(int i = 0; i < 3; i++)
+		advNodes.push_back(tmp);
 		
 	for(int j = 0; j < iterations; j++)
 	{	
+		//cout<<"it\n";
 		//get the number of listener channel
 		int listenerChannel = r.getNumber(listChannels);
 		
@@ -137,8 +139,8 @@ int main(int argc, char **argv)
 		
 		//add the listener
 		t.addListener(listenerChannel);
-			
-		//build the list of advertisers
+		
+			//build the list of advertisers
 		for( list<advNode>::iterator it = advNodes.begin(); it != advNodes.end(); ++it  )
 		{
 			it -> pickCell(r);
@@ -168,5 +170,5 @@ int main(int argc, char **argv)
 	s.setIterations(iterations);
 	s.print(sTmp);
 	
-    return 0;
+	return 0;
 }

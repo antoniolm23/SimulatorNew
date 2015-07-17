@@ -66,8 +66,9 @@ void Stat::print(string t)
 	ofstream myfile;
 	myfile.open("statistics.txt", ios::app);
 	
-	double tot = computeStatistic();
-	myfile<<t<<"\t: Avg:\t"<<tot<<endl;; 
+	double mean = computeStatistic();
+	double CI = computeConfidenceInterval(mean);
+	myfile<<t<<":\tAvg:\t"<<mean<<"\tCI:\t"<<mean - CI<<'\t'<<mean + CI<<endl; 
 	
 	myfile.close();
 }
@@ -76,6 +77,26 @@ void Stat::print(string t)
 void Stat::setIterations(int it)
 {
 	iterations = it;
+}
+
+/**
+ * Computes the 95% confidence interval for the average slot number required
+ * @param: method used to compute the average joining time, average slot number required
+ * @return: 95% confidence interval
+ */
+double Stat::computeConfidenceInterval(double mean) 
+{
+	double stDevSum = 0;
+	for(list<statElem>::iterator it = statsList.begin(); it != statsList.end(); ++it)
+	{
+		double tmp = (mean - it -> timeslotNumber) * it ->frequency; 
+		stDevSum += pow(((tmp)), 2);
+			//cout<<it -> timeslotNumber<<' '<<it->frequency<<' '<<sum<<endl;
+	}
+	double stDev = sqrt(stDevSum / iterations);
+	double confidenceInterval = CONFIDENCE95 * (stDev / sqrt(iterations));
+	
+	return confidenceInterval;
 }
 
 

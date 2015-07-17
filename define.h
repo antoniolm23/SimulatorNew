@@ -11,5 +11,5 @@
 #define PLOSS_SCENARIO 4
 #define CRT 3
 
-#define ENERGY 4
+#define ENERGY 2 
 #define TRANSMISSIONFLAG 0

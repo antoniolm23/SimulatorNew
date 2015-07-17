@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <list>
+#include <cmath>
 
+#define CONFIDENCE95 1.96
 using namespace std;
 
 //an element of the statistics
@@ -22,6 +24,7 @@ public:
 	Stat() {};
 	void statInsert(int tsn);
 	void setIterations(int);
+	double computeConfidenceInterval(double);
 	void print();
 	void print(string t);
 };
